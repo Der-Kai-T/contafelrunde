@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/flex.css">
 
+    <link rel="stylesheet" href="/css/animations/arrow-right.css">
+
     <!-- three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
         integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
@@ -36,7 +38,16 @@
         Test
     </div>
     <div id="threeContainer">
-
+        <div id="threeCanvas"></div>
+        <div class="info flex flex-row-h-center flex-row-v-bottom">
+            <div class="infowrapper">
+                <div class="dot dotleft"></div>
+                <div class="dot dotleft"></div>
+                <div>Maus nach links oder rechts bewegen</div>
+                <div class="dot dotright"></div>
+                <div class="dot dotright"></div>
+            </div>
+        </div>
     </div>
 
     <script src="js/vue/app.js"></script>

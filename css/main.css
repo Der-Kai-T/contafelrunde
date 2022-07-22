@@ -1,5 +1,5 @@
 :root {
-    --master-bg: #fff;
+    --master-bg: transparent;
 }
 
 html,
@@ -9,10 +9,40 @@ body {
     background: var(--master-bg);
     padding: 0;
     margin: 0;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif
 }
 
 #threeContainer {
     width: 100vw;
     height: 40%;
-    background: #fad;
+    z-index: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+}
+
+#threeCanvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.infowrapper {
+    display: flex;
+    margin: 1rem;
+    color: white;
+    align-items: center;
 }

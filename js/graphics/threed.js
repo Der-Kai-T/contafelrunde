@@ -3,7 +3,7 @@ class Environment {
     constructor() {
 
         // get the scene container
-        this.container = document.querySelector("#threeContainer");
+        this.container = document.querySelector("#threeCanvas");
 
         // create a scene
         this.scene = new THREE.Scene();
@@ -146,6 +146,10 @@ class AnimatedGeometry {
             this.centralMesh.add(plane.mesh);
         }
     }
+}
+
+class InteractionCheck {
+
 }
 
 const environment = new Environment();

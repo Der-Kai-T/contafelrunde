@@ -1,0 +1,37 @@
+.dot {
+    position: relative;
+    border: 3px solid white;
+    border-radius: 50%;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.dotleft {
+    animation: aniLeft 1s infinite ease;
+}
+
+.dotright {
+    animation: aniRight 1s infinite ease;
+}
+
+@keyframes aniLeft {
+    0% {
+        left: 0rem;
+    }
+
+    100% {
+        left: -0.5rem;
+        opacity: 0;
+    }
+}
+
+@keyframes aniRight {
+    0% {
+        left: 0rem;
+    }
+
+    100% {
+        left: 0.5rem;
+        opacity: 0;
+    }
+}
