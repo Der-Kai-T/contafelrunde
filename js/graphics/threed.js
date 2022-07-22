@@ -64,11 +64,11 @@ class BackgroundScene {
         const wallGeometry = new THREE.BoxGeometry(100, 50, 1, 200, 200);
         const wallMaterial = this.material = new THREE.MeshStandardMaterial(
             {
-                map: environment.loadRepeatedMap("../resources/img/textures/wall_base.jpg", 8, 4),
-                normalMap: environment.loadRepeatedMap("../resources/img/textures/wall_normal.jpg", 8, 4),
-                displacementMap: environment.loadRepeatedMap("../resources/img/textures/wall_height.png", 8, 4),
-                roughnessMap: environment.loadRepeatedMap("../resources/img/textures/wall_roughness.jpg", 8, 4),
-                aoMap: environment.loadRepeatedMap("../resources/img/textures/wall_ao.jpg", 8, 4),
+                map: environment.loadRepeatedMap("resources/img/textures/wall_base.jpg", 8, 4),
+                normalMap: environment.loadRepeatedMap("resources/img/textures/wall_normal.jpg", 8, 4),
+                displacementMap: environment.loadRepeatedMap("resources/img/textures/wall_height.png", 8, 4),
+                roughnessMap: environment.loadRepeatedMap("resources/img/textures/wall_roughness.jpg", 8, 4),
+                aoMap: environment.loadRepeatedMap("resources/img/textures/wall_ao.jpg", 8, 4),
             })
 
         this.wallMesh = new THREE.Mesh(wallGeometry, wallMaterial);
@@ -89,7 +89,7 @@ class DisplayPlane {
         this.geometry = new THREE.PlaneGeometry(1.4, 2)
         this.material = new THREE.MeshLambertMaterial(
             {
-                map: environment.loader.load("../resources/img/logos/1024-1453.png"),
+                map: environment.loader.load("resources/img/logos/1024-1453.png"),
                 transparent: true,
             })
 
@@ -156,7 +156,7 @@ const environment = new Environment();
 const lights = new Lights(environment.scene);
 const background = new BackgroundScene(environment);
 
-const items = 20;
+const items = 10;
 const radius = (items) / 2;
 
 const geometry = new AnimatedGeometry(environment.scene);
