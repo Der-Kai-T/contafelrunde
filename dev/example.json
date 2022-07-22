@@ -1,0 +1,17 @@
+[
+   {
+      "convention_name":"Lorem_Ipsum",
+      "convention_icon":"/img/shield_001.png",
+      "convention_event":[{
+        "event_date_string": "16. bis 18. Oktober 2022",
+        "event_name": "DreieichCon 2022"
+      }],
+      "convention_text": "Long_text",
+      "convention_links":[{
+        "link_name":"facebook",
+        "link":"https://facebook.com/org"
+      }
+      ]
+
+   }
+]
