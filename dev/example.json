@@ -1,15 +1,31 @@
 [
    {
-      "convention_name":"Lorem_Ipsum",
-      "convention_icon":"/img/shield_001.png",
-      "convention_event":[{
-        "event_date_string": "16. bis 18. Oktober 2022",
-        "event_name": "DreieichCon 2022"
+    "tr_convention_id":"1",
+    "tr_convention_name":"Lorem_Ipsum",
+    "tr_convention_icon":"/img/shield_001.png",
+    "tr_convention_text": "Long_text",
+    "tr_convention_modify_user": "M. Mustermann",
+    "tr_convention_modify_time": "1660427573",
+    "tr_convention_event":[{
+      "tr_convention_event_id":"1",
+      "tr_convention_event_start_ts":"1660427573",
+      "tr_convention_event_end_ts":"1660427573",
+      "tr_convention_event_date_string": "16. bis 18. Oktober 2022",
+      "tr_convention_event_name": "DreieichCon 2022",
+      "tr_convention_event_location": "Bürgerhaus Sprendlingen, Fichtestraße, 63irgendwas Dreieich",
+      "tr_convention_event_text": "lorem ipsum dolor sit amet",
+      "tr_convention_event_modify_user": "M. Mustermann",
+      "tr_convention_event_modify_time": "1660427573"
       }],
-      "convention_text": "Long_text",
-      "convention_links":[{
-        "link_name":"facebook",
-        "link":"https://facebook.com/org"
+      
+      "tr_convention_link":[{
+        "tr_convention_link_id":"1",
+        "tr_convention_link_text":"Facebook-Seite",
+        "tr_convention_link_href":"https://facebook.com/org",
+        "tr_convention_link_type":"1",
+        "tr_convention_link_icon":"fab fa-facebook",
+        "tr_convention_link_modify_user":"M. Mustermann",
+        "tr_convention_link_modify_time":"1660427573"
       }
       ]
 
