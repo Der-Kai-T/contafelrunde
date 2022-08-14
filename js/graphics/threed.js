@@ -45,7 +45,7 @@ class Lights {
     constructor(scene) {
 
         this.centerlight = new THREE.SpotLight(0xffffff, 1.1, 100)
-        this.centerlight.position.z = 20;
+        this.centerlight.position.z = 30;
         this.centerlight.castShadow = true;
         scene.add(this.centerlight)
 
@@ -61,7 +61,7 @@ class Lights {
 class BackgroundScene {
 
     constructor(environment) {
-        const wallGeometry = new THREE.BoxGeometry(100, 50, 1, 200, 200);
+        const wallGeometry = new THREE.BoxGeometry(200, 100, 1, 200, 200);
         const wallMaterial = this.material = new THREE.MeshStandardMaterial(
             {
                 map: environment.loadRepeatedMap("resources/img/textures/wall_base.jpg", 8, 4),
@@ -84,18 +84,24 @@ class BackgroundScene {
 
 class DisplayPlane {
 
-    constructor(index, environment) {
+    constructor(data, index, environment) {
 
         this.geometry = new THREE.PlaneGeometry(1.4, 2)
         this.material = new THREE.MeshLambertMaterial(
             {
-                map: environment.loader.load("resources/img/logos/1024-1453.png"),
+                map: environment.loader.load("resources/" + data.tr_convention_icon),
                 transparent: true,
             })
 
         this.mesh = new THREE.Mesh(this.geometry, this.material)
 
-        this.index = index;
+        this.index = index
+
+        this.mesh.userData = {
+            index: data.tr_convention_id,
+            name: data.tr_convention_name
+        };
+
         this.radius = radius;
 
         this.setPosition();
@@ -117,6 +123,7 @@ class DisplayPlane {
 }
 
 class AnimatedGeometry {
+
     constructor(scene) {
 
         this.centralGeometry = new THREE.CylinderGeometry(1, 1, 1, items);
@@ -141,7 +148,7 @@ class AnimatedGeometry {
     generatePlanes() {
 
         for (var i = 0; i < items; i++) {
-            var plane = new DisplayPlane(i, environment);
+            var plane = new DisplayPlane(window.data[i], i, environment);
             this.planes.push(plane);
             this.centralMesh.add(plane.mesh);
         }
@@ -150,56 +157,201 @@ class AnimatedGeometry {
 
 class InteractionCheck {
 
+    constructor() {
+        this.delta = 2;
+
+        this.mouse = {
+            x: 0,
+            y: 0,
+        }
+
+        this.initialMouse = {
+            x: 0,
+            y: 0,
+        }
+
+        this.mouseFromCenter = {
+            x: 0,
+            y: 0,
+        }
+    }
+
+    updateInitialMouse(event) {
+        this.initialMouse.x = (event.clientX - (window.innerWidth / 2));
+        this.initialMouse.y = (event.clientY - (window.innerHeight / 2));
+    }
+
+    updateMouse(event) {
+        this.mouse.x = (event.clientX - (window.innerWidth / 2));
+        this.mouse.y = (event.clientY - (window.innerHeight / 2));
+
+        this.mouseFromCenter.x = this.mouse.x / (window.innerWidth / 2);
+        this.mouseFromCenter.y = this.mouse.y / (window.innerHeight / 2);
+    }
+
+    deltaX() {
+        return this.initialMouse.x - this.mouse.x;
+    }
+
+    deltaY() {
+        return this.initialMouse.y - this.mouse.y;
+    }
+
+    hasMoved() {
+        return (Math.abs(this.deltaX()) > this.delta || Math.abs(this.deltaY()) > this.delta)
+    }
+}
+
+class RotationHandler {
+    constructor() {
+
+        this.maxRotationAmount = 0.0003;
+        this.currentRotationAmount = 0.0003;
+
+        this.moveHandlerPresent = true;
+
+        this.friction = 0.001;
+
+        this.timeStamp = Date.now();
+    }
+
+    updateRotationAmount() {
+        if (Math.abs(this.currentRotationAmount) > this.maxRotationAmount) {
+
+            if (this.currentRotationAmount < 0) {
+                this.currentRotationAmount += this.friction;
+            }
+            if (this.currentRotationAmount > 0) {
+                this.currentRotationAmount -= this.friction;
+            }
+        }
+    }
+
+    updateEventHandlers() {
+        if (Math.abs(this.currentRotationAmount) < this.maxRotationAmount) {
+            if (!this.moveHandlerPresent) {
+                environment.container.addEventListener("mousemove", onMouseMove, false);
+                this.moveHandlerPresent = true;
+            }
+
+        }
+    }
 }
 
 const environment = new Environment();
 const lights = new Lights(environment.scene);
 const background = new BackgroundScene(environment);
 
-const items = 10;
-const radius = (items) / 2;
+const items = window.data.length;
+const radius = items / 2;
 
 const geometry = new AnimatedGeometry(environment.scene);
+const interactions = new InteractionCheck();
+
+const rotation = new RotationHandler();
+
 geometry.generatePlanes();
-
-
-var mouse = {
-    x: 0,
-    y: 0
-};
-
 
 environment.camera.position.z = radius + 4;
 
-var rotationAmount = 0.0003;
 
+// EVENTS
 
+// default mouse move function when no click is made
 function onMouseMove(event) {
 
-    event.preventDefault();
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-    rotationAmount = mouse.x * 0.0005;
+    interactions.updateMouse(event)
+
+    rotation.currentRotationAmount = interactions.mouseFromCenter.x * rotation.maxRotationAmount;
 
     var raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, environment.camera);
+
+    raycaster.setFromCamera(interactions.mouseFromCenter, environment.camera);
+
     var intersects = raycaster.intersectObject(geometry.centralMesh, true);
 
     if (intersects.length > 0) {
         $('body').css('cursor', 'pointer');
+        $('#shieldhover').text(intersects[0].object.userData.name);
+        $('#shieldhoverwrap').css("background", "var(--info-bg)")
 
     } else {
         $('body').css('cursor', 'default');
+        $('#shieldhover').text("");
+        $('#shieldhoverwrap').css("background", "transparent")
     }
 }
 
+// function to drag the elements
+function onMouseDrag(event) {
+
+    interactions.updateMouse(event);
+
+    var angle = - interactions.deltaX() * 0.000004;
+
+    geometry.centralMesh.rotation.y += angle;
+
+}
+
+// main on mouse down function
+function onMouseDown(event) {
+
+    interactions.updateInitialMouse(event);
+    interactions.updateMouse(event)
+
+    // remove default mouse move handler
+    environment.container.removeEventListener("mousemove", onMouseMove, false);
+    rotation.moveHandlerPresent = false;
+
+    rotation.currentRotationAmount = 0;
+
+    // add drag handler
+    environment.container.addEventListener("mousemove", onMouseDrag, false);
+
+    // add mouseup handler
+    environment.container.addEventListener("mouseup", onMouseUp, false);
+}
+
+function onMouseUp(event) {
+
+    environment.container.removeEventListener("mousemove", onMouseDrag, false);
+
+    interactions.updateMouse(event)
+
+    if (!interactions.hasMoved()) {
+        var raycaster = new THREE.Raycaster();
+
+        raycaster.setFromCamera(interactions.mouseFromCenter, environment.camera);
+
+        var intersects = raycaster.intersectObject(geometry.centralMesh, true);
+
+        if (intersects.length > 0) {
+            console.log("Clicked: ")
+            console.log(intersects[0].object.userData)
+        }
+    }
+
+    else {
+        rotation.currentRotationAmount = rotation.maxRotationAmount * 5;
+    }
+}
+
+
+// environment.container.addEventListener("mousedown", interactions.onMouseDown, false);
 environment.container.addEventListener("mousemove", onMouseMove, false);
+environment.container.addEventListener("mousedown", onMouseDown, false);
 
 
 function animate() {
     requestAnimationFrame(animate);
     environment.render();
-    geometry.update(rotationAmount);
+    rotation.updateRotationAmount();
+    rotation.updateEventHandlers();
+
+    if (rotation.moveHandlerPresent) {
+        geometry.update(rotation.currentRotationAmount);
+    }
+
 }
 
 animate();

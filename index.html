@@ -37,10 +37,13 @@
     <div id="app">
         Test
     </div>
-    <div id="threeContainer">
+    <div id="threeContainer" class="flex">
         <div id="threeCanvas"></div>
-        <div class="info flex flex-row-h-center flex-row-v-bottom">
-            <div class="infowrapper">
+        <div class="info flex flex-col flex-col-h-center flex-col-v-between">
+            <div id="shieldhoverwrap" class="infowrapper flex-row-v-center" style="background: transparent">
+                <div id="shieldhover"></div>
+            </div>
+            <div class="infowrapper flex-row-v-center">
                 <div class="dot dotleft"></div>
                 <div class="dot dotleft"></div>
                 <div>Maus nach links oder rechts bewegen</div>
