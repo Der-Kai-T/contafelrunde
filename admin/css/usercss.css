@@ -1,0 +1,24 @@
+:required {
+	border-color: rgba(5, 3, 134, 0.664) !important;
+	border-width: 2px;
+}
+
+.hidden{
+	display: none;
+}
+
+@media screen {
+	.onlyprint {
+		display: none;
+	}
+}
+
+@media print {
+	.dontprint {
+		display: none;
+	}
+
+	.card-title {
+		font-weight: bold;
+	}
+}
