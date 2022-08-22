@@ -197,7 +197,7 @@
 				<h3 class="card-title">Events</h3>
 
 				<div class="card-tools">
-					<a href="index.php?page=admin_convention_add_event&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neues Convention-Event anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
+					<a href="index.php?page=admin_convention_event_add&tr_convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neues Convention-Event anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
 				</div>
 			</div>
 				
@@ -265,7 +265,7 @@
 										
 										
 										<td>$tr_convention_event_modify_ts<br>$tr_convention_event_modify_id</td>
-										<td><a href='index.php?page=admin_convention_edit&tr_convention_id=$tr_convention_id'><span class='fa fa-edit'></span></a></td>
+										<td><a href='index.php?page=admin_convention_event_edit&tr_convention_event_id=$tr_convention_event_id'><span class='fa fa-edit'></span></a></td>
 									</tr>
 								
 								";
@@ -301,7 +301,7 @@
 				<h3 class="card-title">Links</h3>
 
 				<div class="card-tools">
-					<a href="index.php?page=admin_convention_add_link&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neuen Convention-Link anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
+					<a href="index.php?page=admin_convention_add_link&tr_convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neuen Convention-Link anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
 				</div>
 			</div>
 				
