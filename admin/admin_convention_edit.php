@@ -1,8 +1,18 @@
 <?php
+	if(!isset($convention_id)){
+		if(isset($_GET['tr_convention_id'])){
+			$convention_id = $_GET['tr_convention_id'];
+		}else{
+			include("400.php");
+			include("include/html_footer.php");
+			die;
+		}
+	}
+	
     $where = array();
     $wh['col'] = "tr_convention_id";
     $wh['typ'] = "=";
-    $wh['val'] = $_GET['tr_convention_id'];
+    $wh['val'] = $convention_id;
     array_push($where, $wh);
 
 
@@ -10,9 +20,14 @@
 
     if(count($con) > 0){
         $convention = $con[0];
-    }
+    }else{
+		include("999.php");
+		include("include/html_footer.php");
+		die;
+	}
 
-    $now        = time();
+    $now        		= time();
+
 
 ?>
     
@@ -45,6 +60,8 @@
 
 
 <form action="index.php?page=admin_convention_edit_script" method="POST">
+	<input type="hidden" name="convention_id" value="<?php echo $convention['tr_convention_id'];?> ">
+	<input type="hidden" name="convention_name_old" value="<?php echo $convention['tr_convention_name'];?>">
 
 <div class="row">
     <div class="col-12">
@@ -63,8 +80,8 @@
                             <div class="col-6">
                             
                                 <div class="form-group">
-                                    <label class="col-form-label" for="tr_convention_name">Con-Name</label>
-                                    <input required type="text" name="tr_convention_name"  class="form-control" placeholder="">
+                                    <label class="col-form-label" for="tr_convention_name" >Con-Name</label>
+                                    <input required type="text" name="tr_convention_name"  class="form-control" placeholder="" value="<?php echo $convention['tr_convention_name']; ?>">
                                 </div>
                             </div>
 
@@ -77,7 +94,7 @@
                             
                                 <div class="form-group">
                                     <label class="col-form-label" for="tr_convention_text">Beschreibung</label><br>
-                                    <textarea required name="tr_convention_text" id="tr_convention_text" class="form-control" placeholder=""></textarea>
+                                    <textarea required name="tr_convention_text" id="tr_convention_text" class="form-control" placeholder="" rows="10"><?php echo $convention['tr_convention_text']; ?></textarea>
                                 </div>
                             </div>
 
@@ -108,6 +125,68 @@
 
 
 
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Wappenschild</h3>
+				
+				<div class="card-tools">
+				</div>
+			</div>
+
+			<div class="card-body table-responsive " style="height: auto;">
+				<div class="row">
+					<div class="col-4">
+						<?php
+							if($convention['tr_convention_icon']==""){
+								$icon = "../resources/coat_of_arms.png";
+							}else{
+								$icon = "../resources/img/logos/" . $convention['tr_convention_icon']. ".";
+							}
+							?>
+						<img src="<?php echo $icon; ?>" height="250px">
+					</div>
+					
+					<div class="col-8">
+
+						<form action="index.php?page=admin_convention_shield_upload" method="POST" enctype="multipart/form-data" id="img_upload_form">
+							<input type="hidden" name="convention_id" value="<?php echo $convention['tr_convention_id'];?> ">
+							<p>Nur Bilder im Format jpg, jpeg, gif und png sind erlaubt. Maximal 5MB pro Bild</p>
+							<p class="text-danger">Achtung: Ist bereits ein Wappenschild vorhanden (links wird kein leeres Wappenschild dargestellt), wird das bereits hochgeladene Wappenschild überschrieben, ohne dass es zurückgeholt werden kann.</p>
+							
+
+							<div class="form-group">
+								<label for="exampleInputFile">Wappenschild hochladen</label>
+								<div class="input-group">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="image" name="image">
+										
+										<label class="custom-file-label" for="image"><i class="fas fa-search"></i> &nbsp;Datei auswählen</label>
+									</div>
+									
+									<div class="input-group-append">
+										<!--<span class="input-group-text" onclick="$('#img_upload_form').submit()">Hochladen</span>-->
+										<button type="submit" class="input-group-text"><span class='fas fa-upload'></span>&nbsp;hochladen</button>			
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
 
 
 
@@ -118,7 +197,7 @@
 				<h3 class="card-title">Events</h3>
 
 				<div class="card-tools">
-					<a href="index.php?page=admin_convention_add_event&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neue Convention anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
+					<a href="index.php?page=admin_convention_add_event&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neues Convention-Event anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
 				</div>
 			</div>
 				
@@ -222,7 +301,7 @@
 				<h3 class="card-title">Links</h3>
 
 				<div class="card-tools">
-					<a href="index.php?page=admin_convention_add_link&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neue Convention anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
+					<a href="index.php?page=admin_convention_add_link&convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neuen Convention-Link anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
 				</div>
 			</div>
 				

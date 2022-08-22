@@ -107,3 +107,6 @@ COLLATE=latin1_swedish_ci;
 
 
 ALTER TABLE contafelrunde.tr_convention_link ADD CONSTRAINT tr_convention_link_FK_2 FOREIGN KEY (tr_convention_link_type_id) REFERENCES contafelrunde.tr_convention_link_type(tr_convention_link_type_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+ALTER TABLE contafelrunde.tr_convention MODIFY COLUMN tr_convention_text TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
