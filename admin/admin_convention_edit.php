@@ -301,7 +301,7 @@
 				<h3 class="card-title">Links</h3>
 
 				<div class="card-tools">
-					<a href="index.php?page=admin_convention_add_link&tr_convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neuen Convention-Link anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
+					<a href="index.php?page=admin_convention_link_add&tr_convention_id=<?php echo $convention['tr_convention_id']; ?>" title="neuen Convention-Link anlegen" class="btn btn-primary"><span class="fa fa-plus-circle"> </span> neu</a>
 				</div>
 			</div>
 				
